@@ -8,8 +8,6 @@ export function createSearchClient({
   maxCalls,
   interval,
   cacheTtl,
-  url,
-  queryParam  = ''
 }) {
   const limiter = createRateLimiter({
     max: maxCalls,
@@ -18,7 +16,7 @@ export function createSearchClient({
 
   const cache = new Cache(cacheTtl);
 
-  const execute = async () => {
+  const execute = async (url, queryParam) => {
     // 1️⃣ Cache first (fastest path)
     const cached = cache.get(queryParam);
     if (cached !== undefined) {

@@ -7,4 +7,4 @@ export interface SearchClientOptions {
 
 export function SearchClient(
   options: SearchClientOptions
-): (query: string) => Promise<any>;
+): (url: string, query: string) => Promise<any>;
