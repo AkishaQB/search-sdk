@@ -1,6 +1,6 @@
 {
   "name": "@akisha_jm/search-sdk",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A debounced, rate-limited, cached search SDK",
   "type": "module",
   "main": "./dist/search-sdk.esm.js",
