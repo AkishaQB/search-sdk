@@ -4,7 +4,7 @@
 
 
 export function debounce(fn, delay = 200) {
-    const timerId = null;
+    let timerId = null;
 
     function debounced(...args) {
         const context = this;
