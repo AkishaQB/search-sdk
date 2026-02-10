@@ -7,7 +7,9 @@ export function createSearchClient({
   debounceMs,
   maxCalls,
   interval,
-  cacheTtl
+  cacheTtl,
+  url,
+  queryParam  = ''
 }) {
   const limiter = createRateLimiter({
     max: maxCalls,
@@ -16,9 +18,9 @@ export function createSearchClient({
 
   const cache = new Cache(cacheTtl);
 
-  const execute = async (url, query) => {
+  const execute = async () => {
     // 1️⃣ Cache first (fastest path)
-    const cached = cache.get(query);
+    const cached = cache.get(queryParam);
     if (cached !== undefined) {
       return cached;
     }
@@ -29,7 +31,7 @@ export function createSearchClient({
     }
 
     // 3️⃣ Network call
-    const result = await request(`${url}?q=${encodeURIComponent(query)}`);
+    const result = await request(`${url}?q=${encodeURIComponent(queryParam)}`);
 
     // 4️⃣ Store in cache
     cache.set(query, result);
