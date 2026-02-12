@@ -1,7 +1,6 @@
 import { debounce } from "./debounce.js";
 import { createRateLimiter } from "./rateLimiter.js";
 import { Cache } from "./cache.js";
-import { request } from "./http.js";
 
 export function createSearchClient({
   debounceMs,
@@ -16,7 +15,7 @@ export function createSearchClient({
 
   const cache = new Cache(cacheTtl);
 
-  const execute = async (url, queryParam) => {
+  const execute = async (request) => {
     // 1️⃣ Cache first (fastest path)
     const cached = cache.get(queryParam);
     if (cached !== undefined) {
@@ -29,8 +28,8 @@ export function createSearchClient({
     }
 
     // 3️⃣ Network call
-    const result = await request(`${url}?q=${encodeURIComponent(queryParam)}`);
-
+    const result = await request();
+    console.log("Fetched from network:", result);
     // 4️⃣ Store in cache
     cache.set(query, result);
 
